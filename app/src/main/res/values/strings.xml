@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">YOLO</string>
+    <string name="start_video_call">Inizia Video Chiamata</string>
+    <string name="no_operator_available">Nessun operatore disponibile</string>
+</resources>

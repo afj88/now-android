@@ -1,0 +1,100 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+
+<html style="height:100%;">
+	<head>
+		<meta http-equiv="Content-Security-Policy" content="default-src * gap://ready wss://* blob: data: filesystem:; media-src * data: blob: filesystem:  ; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	    <link rel='stylesheet' href='https://cnpvita.inventia.biz/connect-server/common/css/fonts.css'>
+	    <link rel="stylesheet" href="https://cnpvita.inventia.biz/connect-server/common/css/body-style.css" />
+	    <link rel="stylesheet" href="https://cnpvita.inventia.biz/connect-server/common/css/header-style.css" />
+	    <link rel="stylesheet" href="https://cnpvita.inventia.biz/connect-server/common/css/footer-style.css" />
+	    <link rel="stylesheet" href="https://cnpvita.inventia.biz/connect-server/common/css/central-style.css" />
+	    <link rel="stylesheet" href="https://cnpvita.inventia.biz/connect-server/common/css/video-style.css">
+	    <link rel="stylesheet" href="https://cnpvita.inventia.biz/connect-server/common/css/animations.css">
+	    <link rel="stylesheet" href="https://cnpvita.inventia.biz/connect-server/common/pdfjs/pdf_viewer.css">
+		<link rel="stylesheet" href="https://cnpvita.inventia.biz/connect-server/common/css/custom_pdf_viewer.css">
+		<link rel="stylesheet" href="https://cnpvita.inventia.biz/connect-server/mobile/css/override.css" />
+	    <link rel="stylesheet" href="https://cnpvita.inventia.biz/connect-server-cnpvita/mobile/css/custom-mobile.css" />
+
+		<title>Mobile App</title>
+	
+		<script src="https://cnpvita.inventia.biz/connect-server/mobile/js/mobile-launcher.js"></script>
+		
+		<script>
+ 			var mobileWidget = MobileWidget.getInstance();
+			if(!MobileWidget.isNativeSDK()){
+				if(!MobileWidget.getURLParameters()){
+					MobileWidget.setSessionData({},
+			    		function(sessionToken) {
+							clientConfig = {};
+		                	clientConfig.sessionToken = sessionToken;
+		                	mobileWidget.startCall(clientConfig);
+						},
+		    			function(err) {
+		    				console.log(err);
+		    				alert("An error has occured. Please retry later.");
+		    			}
+		    		);
+				}else{
+					mobileWidget.startCall();
+				}
+			}
+			
+		</script>
+
+		<!--               JS libraries					-->
+		<script src="https://cnpvita.inventia.biz/connect-server/common/js/hammer.js"></script>
+
+		<!-- 				PDFJS						-->
+		<script src="https://cnpvita.inventia.biz/connect-server/common/pdfjs/compatibility.js"></script>
+		<script src="https://cnpvita.inventia.biz/connect-server/common/pdfjs/pdf.js"></script>
+		<script src="https://cnpvita.inventia.biz/connect-server/common/pdfjs/pdf_viewer.js"></script>
+
+		<style type="text/css">
+	        *:not(input,textarea) {
+	            -webkit-user-select: none;
+	            -moz-user-select: -moz-none;
+	            -khtml-user-select: none;
+	            -webkit-user-select: none;
+	            -webkit-touch-callout: none;
+	            -webkit-tap-highlight-color: rgba(0,0,0,0);
+	        }
+	        video::-webkit-media-controls {
+	            display:none !important;
+	        }
+	        video::-webkit-media-controls-start-playback-button {
+  				display: none !important;
+			}	
+	    </style>
+	</head>
+
+	<!--                                           -->
+	<!-- The body can have arbitrary html, or      -->
+	<!-- you can leave the body empty if you want  -->
+	<!-- to create a completely dynamic UI.        -->
+	<!--                                           -->
+	<body>
+<!-- 		<div id="deviceready" class="blink" style="display:none;"> -->
+<!-- 		    <p class="event listening" sryle>Connecting to Device</p> -->
+<!-- 		    <p class="event received">Device is Ready</p> -->
+<!-- 		</div> -->
+		<!-- OPTIONAL: include this if you want history support -->
+		<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position: absolute; width: 0; height: 0; border: 0"></iframe>
+
+		<!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+		<noscript>
+			<div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+				Your web browser must have JavaScript enabled in order for this
+				application to display correctly.</div>
+		</noscript>
+
+	</body>
+</html>

@@ -1,0 +1,91 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+    defaultConfig {
+        applicationId "it.ret.yolo"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        jackOptions {
+            enabled true
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a'
+        }
+    }
+}
+
+ext.abiCodes = ['armeabi-v7a': 1, mips: 2, x86: 3]
+
+import com.android.build.OutputFile
+
+// For each APK output variant, override versionCode with a combination of
+// ext.abiCodes * 1000 + variant.versionCode. In this example, variant.versionCode
+// is equal to defaultConfig.versionCode. If you configure product flavors that
+// define their own versionCode, variant.versionCode uses that value instead.
+android.applicationVariants.all { variant ->
+
+    // Assigns a different version code for each output APK
+    // other than the universal APK.
+    variant.outputs.each { output ->
+
+        // Stores the value of ext.abiCodes that is associated with the ABI for this variant.
+        def baseAbiVersionCode =
+                // Determines the ABI for this variant and returns the mapped value.
+                project.ext.abiCodes.get(output.getFilter(OutputFile.ABI))
+
+        // Because abiCodes.get() returns null for ABIs that are not mapped by ext.abiCodes,
+        // the following code does not override the version code for universal APKs.
+        // However, because we want universal APKs to have the lowest version code,
+        // this outcome is desirable.
+        if (baseAbiVersionCode != null) {
+
+            // Assigns the new version code to versionCodeOverride, which changes the version code
+            // for only the output APK, not for the variant itself. Skipping this step simply
+            // causes Gradle to use the value of variant.versionCode for the APK.
+            output.versionCodeOverride =
+                    baseAbiVersionCode * 1000 + variant.versionCode
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+
+    compile 'net.danlew:android.joda:2.9.5.1'
+
+    compile(name: 'connect-sdk-android-xwalk_core_library-3.0.2_22.52', ext: 'aar')
+    compile(name: 'connect-sdk-android-3.0.7', ext: 'aar')
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+}
