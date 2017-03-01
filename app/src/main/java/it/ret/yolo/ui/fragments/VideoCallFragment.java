@@ -27,7 +27,7 @@ import it.ret.yolo.ui.connect.VideoCallObserver;
  * Created by Alessandro Frigerio on 27/01/2017.
  */
 
-public class VideoCallFragment extends ConnectFragment {
+public class VideoCallFragment extends ConnectFragment implements VideoCallObserver.VideoCallObserverListener {
 
     //    private static final String MOBILE_ENTRY_POINT_URL = "file:///android_asset/connectsdkassets/mobile.html";
     private static final String MOBILE_ENTRY_POINT_URL = "https://cnpvita.inventia.biz/connect-server-cnpvita/mobile/mobile.html";
@@ -52,6 +52,7 @@ public class VideoCallFragment extends ConnectFragment {
     private boolean isSameVersion;
     private String sessionToken;
     private View root;
+    private ConnectClient connectClient;
 
     public static VideoCallFragment newInstance(String firstName, String secondName, @NonNull DateTime birthDate, String fiscalCode, String email, String link) {
         Bundle args = new Bundle();
@@ -187,7 +188,7 @@ public class VideoCallFragment extends ConnectFragment {
     }
 
     private void initConnectClient() {
-        ConnectClient connectClient = this.getConnectClient();
+        connectClient = this.getConnectClient();
 
         HashMap<String, String> config = new HashMap<>();
         config.put(ConnectClient.kConnectConfigAppUrl, MOBILE_ENTRY_POINT_URL);
@@ -196,8 +197,7 @@ public class VideoCallFragment extends ConnectFragment {
         config.put(ConnectClient.kConnectConfigKeyAutoConnect, String.valueOf(true));
         config.put(ConnectClient.kConnectConfigKeyAutoStartCall, String.valueOf(true));
 
-        VideoCallObserver videoCallObserver = new VideoCallObserver();
-
+        VideoCallObserver videoCallObserver = new VideoCallObserver(this);
         connectClient.initClient(videoCallObserver, config);
 
         root.setVisibility(View.VISIBLE);
@@ -205,5 +205,10 @@ public class VideoCallFragment extends ConnectFragment {
 
     private void showNoOperatorAvailableMessage(View view) {
         Snackbar.make(view, R.string.no_operator_available, Snackbar.LENGTH_LONG);
+    }
+
+    @Override
+    public void onCallClosed() {
+
     }
 }

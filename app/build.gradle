@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "it.ret.yolo"
         minSdkVersion 16
@@ -29,6 +29,7 @@ android {
             enable true
             reset()
             include 'x86', 'armeabi-v7a'
+            universalApk true
         }
     }
 }
@@ -74,10 +75,16 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:25.1.0'
+
+    compile 'com.annimon:stream:1.1.5'
+
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:design:25.2.0'
 
     compile 'net.danlew:android.joda:2.9.5.1'
+
+    compile 'com.github.barteksc:android-pdf-viewer:2.4.0'
+    compile 'com.tuyenmonkey:mkloader:1.0.0'
 
     compile(name: 'connect-sdk-android-xwalk_core_library-3.0.2_22.52', ext: 'aar')
     compile(name: 'connect-sdk-android-3.0.7', ext: 'aar')
